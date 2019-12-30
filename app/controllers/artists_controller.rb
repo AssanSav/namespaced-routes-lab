@@ -1,4 +1,5 @@
 class ArtistsController < ApplicationController
+  
   def index
     @artists = Artist.all
   end
@@ -8,12 +9,12 @@ class ArtistsController < ApplicationController
   end
 
   def new
-    #binding.pry
-    @preference = Preference.last 
-    if @preference.allow_create_artists # Is false but on the browser it still shows the form to create a new artist
-      @artist = Artist.new
-    else
+    binding.pry
+    @preference = Preference.first
+    if @preference && !@preference.allow_create_artists 
       redirect_to artists_path
+    else
+      @artist = Artist.new
     end
   end
 
